@@ -20,7 +20,7 @@
             max-width: 100%; 
             height: auto; 
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            border-radius: 0px;
+            border-radius: 0;
             margin-bottom: 20px;
         }
         h2 {
@@ -85,7 +85,7 @@
 </head>
 <body>
     <div class="content">
-        <h2>Your ICAI Marksheet</h2>
+        <h2 id="personalizedHeading">CA Student, Dream Big, Manifest Your Win!</h2>
         <div id="marksheetImageContainer">
             <!-- Marksheet image will be inserted here by JavaScript -->
         </div>
@@ -100,6 +100,14 @@
         // Get the marksheet image from localStorage
         window.addEventListener('DOMContentLoaded', function() {
             const marksheetImage = localStorage.getItem('marksheetImage');
+            const studentName = localStorage.getItem('studentName');
+            
+            // Update the heading with the student's name if available
+            if (studentName) {
+                document.getElementById('personalizedHeading').textContent = 
+                    `CA ${studentName}, Dream Big, Manifest Your Win!`;
+            }
+            
             if (marksheetImage) {
                 // Create and add the image
                 const imgElement = document.createElement('img');

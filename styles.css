@@ -390,7 +390,7 @@ body {
     font-weight: normal;
     color: #333;
     background-color: white;
-    border-bottom: 2px solid #ad5f9d;
+    border-bottom: none;
 }
 
 /* Subject Rows */

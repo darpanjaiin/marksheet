@@ -60,9 +60,9 @@ form.addEventListener('submit', (e) => {
     
     // Get form values
     const examAttempt = document.getElementById('examAttempt').value;
-    // Keep roll number blank
-    const rollNumber = "";
-    const name = document.getElementById('name').value;
+    // Generate a random 6-digit roll number
+    const rollNumber = Math.floor(100000 + Math.random() * 900000).toString();
+    const name = document.getElementById('name').value.toUpperCase();
     
     // Get marks
     const frMarks = parseInt(document.getElementById('fr').value);
@@ -168,6 +168,12 @@ function handleDownloadClick() {
                     if (title) {
                         title.style.margin = '0 auto';
                     }
+                    
+                    // Ensure Group headers don't have bottom borders
+                    const groupHeaders = clonedMarksheet.querySelectorAll('.group h3');
+                    groupHeaders.forEach(header => {
+                        header.style.borderBottom = 'none';
+                    });
                 }
             }
         }).then(function(canvas) {
@@ -257,14 +263,21 @@ function generateAndOpenImage() {
                     if (title) {
                         title.style.margin = '0 auto';
                     }
+                    
+                    // Ensure Group headers don't have bottom borders
+                    const groupHeaders = clonedMarksheet.querySelectorAll('.group h3');
+                    groupHeaders.forEach(header => {
+                        header.style.borderBottom = 'none';
+                    });
                 }
             }
         }).then(function(canvas) {
             try {
                 const imgData = canvas.toDataURL('image/png');
                 
-                // Store the image data in localStorage
+                // Store the image data and student name in localStorage
                 localStorage.setItem('marksheetImage', imgData);
+                localStorage.setItem('studentName', document.getElementById('displayName').textContent);
                 
                 // Redirect to marksheet.html
                 window.location.href = 'marksheet.html';
