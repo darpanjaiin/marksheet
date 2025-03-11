@@ -388,6 +388,8 @@ body {
     padding: 12px 20px;
     font-size: 18px;
     font-weight: normal;
+    margin-bottom: -5px;
+    margin-top: -5px;
     color: #333;
     background-color: white;
     border-bottom: none;
@@ -403,7 +405,7 @@ body {
 .subject-row .subject {
     flex: 1;
     padding: 12px 20px;
-    font-size: 16.9px;
+    font-size: 18.9px;
 }
 
 .subject-row .marks {
@@ -411,7 +413,7 @@ body {
     text-align: left;
     padding: 12px 20px;
     border-left: 2px solid white;
-    font-size: 16.9px;
+    font-size: 18.9px;
 }
 
 /* Alternating colors for subject rows */
@@ -435,7 +437,7 @@ body {
     flex: 1;
     padding: 12px 20px;
     font-weight: bold;
-    font-size: 16.9px;
+    font-size: 18.9px;
 }
 
 .total-row .value {
@@ -444,7 +446,7 @@ body {
     padding: 12px 20px;
     border-left: 2px solid white;
     font-weight: bold;
-    font-size: 16.9px;
+    font-size: 18.9px;
 }
 
 /* Result Row */
