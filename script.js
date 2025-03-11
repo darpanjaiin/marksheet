@@ -48,6 +48,12 @@ function determineResult(group1Total, group2Total, allSubjectsPassed) {
     return "UNSUCCESSFUL";
 }
 
+// Function to check if device is mobile
+function isMobileDevice() {
+    return (window.innerWidth <= 768) || 
+           /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 // Handle form submission
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -131,9 +137,12 @@ downloadImageButton.addEventListener('click', function() {
         const originalDisplay = marksheet.style.display;
         marksheet.style.display = 'block';
         
+        // Adjust scale based on device type
+        const scale = isMobileDevice() ? 1 : 2;
+        
         // Simple configuration for html2canvas
         html2canvas(document.getElementById('marksheet'), {
-            scale: 2,
+            scale: scale,
             backgroundColor: '#ffffff',
             allowTaint: true,
             useCORS: true,
@@ -158,15 +167,55 @@ downloadImageButton.addEventListener('click', function() {
                     if (title) {
                         title.style.margin = '0 auto';
                     }
+                    
+                    // For mobile, ensure the marksheet fits well
+                    if (isMobileDevice()) {
+                        const rows = clonedMarksheet.querySelectorAll('.subject-row, .total-row, .result-row');
+                        rows.forEach(row => {
+                            row.style.display = 'flex';
+                            row.style.flexWrap = 'nowrap';
+                        });
+                    }
                 }
             }
         }).then(function(canvas) {
             try {
                 // Simple download approach
                 const link = document.createElement('a');
-                link.download = `ICAI_Marksheet_${examDisplay.textContent.replace(/\s+/g, '_')}.png`;
-                link.href = canvas.toDataURL('image/png');
-                link.click();
+                const filename = `ICAI_Marksheet_${examDisplay.textContent.replace(/\s+/g, '_')}.png`;
+                
+                // For iOS devices, show the image in a new tab instead of direct download
+                if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+                    const imgData = canvas.toDataURL('image/png');
+                    const newTab = window.open();
+                    if (newTab) {
+                        newTab.document.write(`
+                            <html>
+                                <head>
+                                    <title>ICAI Marksheet</title>
+                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                    <style>
+                                        body { margin: 0; padding: 20px; text-align: center; }
+                                        img { max-width: 100%; height: auto; }
+                                        p { font-family: Arial, sans-serif; margin-top: 20px; }
+                                    </style>
+                                </head>
+                                <body>
+                                    <img src="${imgData}" alt="ICAI Marksheet">
+                                    <p>Press and hold on the image to save it to your device.</p>
+                                </body>
+                            </html>
+                        `);
+                        newTab.document.close();
+                    } else {
+                        alert('Please allow pop-ups to view and save your marksheet.');
+                    }
+                } else {
+                    // For other devices, use normal download
+                    link.download = filename;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                }
                 
                 // Reset button
                 downloadImageButton.disabled = false;
