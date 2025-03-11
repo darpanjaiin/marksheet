@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ICAI Marksheet</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 20px; 
+            text-align: center; 
+            background-color: #f0f0f0;
+            background-image: linear-gradient(to right, rgba(145, 0, 141, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(145, 0, 141, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        img { 
+            max-width: 100%; 
+            height: auto; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #91008d;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            font-weight: normal;
+            letter-spacing: 0.5px;
+        }
+        .content { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 10px;
+        }
+        .button { 
+            display: inline-block; 
+            margin: 10px;
+            padding: 10px 20px; 
+            background-color: white;
+            color: black;
+            border: 1.5px solid #000;
+            text-decoration: none; 
+            border-radius: 0.5rem;
+            box-shadow: 2.5px 3px 0 #000;
+            font-weight: bold;
+            transition: ease 0.25s;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+        }
+        .button:hover {
+            box-shadow: 3.5px 5px 0 #000;
+            transform: translateY(-2px);
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .mobile-instructions {
+            display: none;
+            margin: 10px 0;
+            color: #333;
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+        }
+        @media (max-width: 768px) {
+            .mobile-instructions {
+                display: block;
+            }
+            #downloadButton {
+                display: none;
+            }
+        }
+        
+        /* Additional styles to match the ICAI marksheet in the image */
+        #marksheetImageContainer img {
+            border: none;
+            border-radius: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h2>Your ICAI Marksheet</h2>
+        <div id="marksheetImageContainer">
+            <!-- Marksheet image will be inserted here by JavaScript -->
+        </div>
+        <p class="mobile-instructions">Press and hold the image to save</p>
+        <div class="buttons">
+            <a id="downloadButton" class="button">Download Marksheet</a>
+            <a href="index.html" class="button">Back to Form</a>
+        </div>
+    </div>
+
+    <script>
+        // Get the marksheet image from localStorage
+        window.addEventListener('DOMContentLoaded', function() {
+            const marksheetImage = localStorage.getItem('marksheetImage');
+            if (marksheetImage) {
+                // Create and add the image
+                const imgElement = document.createElement('img');
+                imgElement.src = marksheetImage;
+                imgElement.alt = "ICAI Marksheet";
+                document.getElementById('marksheetImageContainer').appendChild(imgElement);
+                
+                // Set up download button
+                const downloadButton = document.getElementById('downloadButton');
+                if (downloadButton) {
+                    downloadButton.addEventListener('click', function() {
+                        const link = document.createElement('a');
+                        link.download = 'ICAI_Marksheet.png';
+                        link.href = marksheetImage;
+                        link.click();
+                    });
+                }
+            } else {
+                document.getElementById('marksheetImageContainer').innerHTML = 
+                    '<p style="color: red;">No marksheet found. Please go back and generate a marksheet.</p>';
+                
+                // Hide download button
+                const downloadButton = document.getElementById('downloadButton');
+                if (downloadButton) {
+                    downloadButton.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
