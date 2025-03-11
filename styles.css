@@ -328,6 +328,7 @@ body {
     color: white;
     padding: 12px 20px;
     font-weight: bold;
+    font-size: 18px;
     border-right: 2px solid white;
 }
 
@@ -335,6 +336,7 @@ body {
     flex: 1;
     color: white;
     padding: 12px 20px;
+    font-size: 18px;
 }
 
 /* Name row */
@@ -347,6 +349,7 @@ body {
     color: #efd486;
     padding: 12px 20px;
     font-weight: bold;
+    font-size: 18px;
     border-right: 2px solid white;
 }
 
@@ -355,6 +358,7 @@ body {
     color: #efd486;
     padding: 12px 20px;
     font-weight: bold;
+    font-size: 18px;
 }
 
 /* Group Headers */

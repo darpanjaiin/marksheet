@@ -3,7 +3,7 @@ const form = document.getElementById('marksheetForm');
 const marksheet = document.getElementById('marksheet');
 const downloadButtons = document.querySelector('.download-buttons');
 const downloadPDFButton = document.getElementById('downloadPDF');
-const downloadImageButton = document.getElementById('downloadImage');
+const downloadImageButton = document.getElementById('downloadImageButton');
 const examDisplay = document.getElementById('examDisplay');
 const examTitleDisplay = document.getElementById('examTitleDisplay');
 
@@ -60,92 +60,67 @@ form.addEventListener('submit', (e) => {
     
     // Get form values
     const examAttempt = document.getElementById('examAttempt').value;
-    const rollNumber = document.getElementById('rollNumber').value;
+    // Generate a random 6-digit roll number
+    const rollNumber = Math.floor(100000 + Math.random() * 900000).toString();
     const name = document.getElementById('name').value;
     
-    // Validate roll number (6 digits)
-    if (!/^\d{6}$/.test(rollNumber)) {
-        alert('Please enter a valid 6-digit roll number');
-        return;
-    }
-    
-    // Group I marks
-    const fr = parseInt(document.getElementById('fr').value) || 0;
-    const afm = parseInt(document.getElementById('afm').value) || 0;
-    const aaa = parseInt(document.getElementById('aaa').value) || 0;
-    
-    // Group II marks
-    const dtit = parseInt(document.getElementById('dtit').value) || 0;
-    const itl = parseInt(document.getElementById('itl').value) || 0;
-    const ibs = parseInt(document.getElementById('ibs').value) || 0;
+    // Get marks
+    const frMarks = parseInt(document.getElementById('fr').value);
+    const afmMarks = parseInt(document.getElementById('afm').value);
+    const aaaMarks = parseInt(document.getElementById('aaa').value);
+    const dtitMarks = parseInt(document.getElementById('dtit').value);
+    const itlMarks = parseInt(document.getElementById('itl').value);
+    const ibsMarks = parseInt(document.getElementById('ibs').value);
     
     // Calculate totals
-    const group1Total = fr + afm + aaa;
-    const group2Total = dtit + itl + ibs;
+    const group1Total = frMarks + afmMarks + aaaMarks;
+    const group2Total = dtitMarks + itlMarks + ibsMarks;
     const grandTotal = group1Total + group2Total;
     
-    // Check if all subjects meet minimum marks requirement
-    const allSubjectsPassed = isSubjectPassed(fr) && isSubjectPassed(afm) && isSubjectPassed(aaa) &&
-                             isSubjectPassed(dtit) && isSubjectPassed(itl) && isSubjectPassed(ibs);
+    // Check if all subjects have minimum marks
+    const allSubjectsPassed = isSubjectPassed(frMarks) && isSubjectPassed(afmMarks) && 
+                             isSubjectPassed(aaaMarks) && isSubjectPassed(dtitMarks) && 
+                             isSubjectPassed(itlMarks) && isSubjectPassed(ibsMarks);
     
     // Determine results
-    const group1Result = isGroupPassed(fr, afm, aaa, group1Total);
-    const group2Result = isGroupPassed(dtit, itl, ibs, group2Total);
+    const group1Result = isGroupPassed(frMarks, afmMarks, aaaMarks, group1Total) ? "SUCCESSFUL" : "UNSUCCESSFUL";
+    const group2Result = isGroupPassed(dtitMarks, itlMarks, ibsMarks, group2Total) ? "SUCCESSFUL" : "UNSUCCESSFUL";
     const overallResult = determineResult(group1Total, group2Total, allSubjectsPassed);
     
-    // Update exam attempt
-    examDisplay.textContent = examAttempt;
-    examTitleDisplay.textContent = examAttempt;
-    
-    // Update marksheet
+    // Update marksheet with form values
+    document.getElementById('examDisplay').textContent = examAttempt;
+    document.getElementById('examTitleDisplay').textContent = examAttempt;
     document.getElementById('displayRollNumber').textContent = rollNumber;
-    document.getElementById('displayName').textContent = name.toUpperCase();
+    document.getElementById('displayName').textContent = name;
     
-    // Update Group I marks with leading zeros
-    document.getElementById('displayFR').textContent = formatMarks(fr);
-    document.getElementById('displayAFM').textContent = formatMarks(afm);
-    document.getElementById('displayAAA').textContent = formatMarks(aaa);
+    // Update marks
+    document.getElementById('displayFR').textContent = formatMarks(frMarks);
+    document.getElementById('displayAFM').textContent = formatMarks(afmMarks);
+    document.getElementById('displayAAA').textContent = formatMarks(aaaMarks);
+    document.getElementById('displayDTIT').textContent = formatMarks(dtitMarks);
+    document.getElementById('displayITL').textContent = formatMarks(itlMarks);
+    document.getElementById('displayIBS').textContent = formatMarks(ibsMarks);
+    
+    // Update totals and results
     document.getElementById('group1Total').textContent = formatMarks(group1Total);
-    document.getElementById('group1Result').textContent = group1Result ? "SUCCESSFUL" : "UNSUCCESSFUL";
-    
-    // Update Group II marks with leading zeros
-    document.getElementById('displayDTIT').textContent = formatMarks(dtit);
-    document.getElementById('displayITL').textContent = formatMarks(itl);
-    document.getElementById('displayIBS').textContent = formatMarks(ibs);
     document.getElementById('group2Total').textContent = formatMarks(group2Total);
-    document.getElementById('group2Result').textContent = group2Result ? "SUCCESSFUL" : "UNSUCCESSFUL";
-    
-    // Update Grand Total with leading zeros
     document.getElementById('grandTotal').textContent = formatMarks(grandTotal);
+    document.getElementById('group1Result').textContent = group1Result;
+    document.getElementById('group2Result').textContent = group2Result;
     
     // Different behavior for mobile and desktop
     if (isMobileDevice()) {
-        // For mobile: Hide marksheet and download buttons, generate image directly
-        marksheet.style.display = 'block'; // Temporarily show for capture
-        downloadButtons.style.display = 'none'; // Hide download buttons
-        
-        // Show loading message
-        let loadingMessage = document.getElementById('loadingMessage');
-        if (!loadingMessage) {
-            loadingMessage = document.createElement('div');
-            loadingMessage.id = 'loadingMessage';
-            loadingMessage.style.backgroundColor = 'white';
-            loadingMessage.style.padding = '20px';
-            loadingMessage.style.borderRadius = '8px';
-            loadingMessage.style.marginBottom = '20px';
-            loadingMessage.style.textAlign = 'center';
-            loadingMessage.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-            loadingMessage.innerHTML = '<p style="color: #91008d; font-weight: bold; margin-bottom: 10px;">Generating your marksheet...</p>' +
-                                     '<p>Please wait a moment...</p>';
-            
-            // Insert after form
-            document.querySelector('.input-form').after(loadingMessage);
-        } else {
-            loadingMessage.style.display = 'block';
+        // For mobile: Show a simple loading message and generate image directly
+        const submitButton = document.querySelector('#marksheetForm button[type="submit"]');
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
         }
         
-        // Scroll to loading message
-        loadingMessage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Make marksheet visible but hidden from view for capture
+        marksheet.style.display = 'block';
+        marksheet.style.position = 'absolute';
+        marksheet.style.left = '-9999px';
         
         // Generate and open image directly
         generateAndOpenImage();
@@ -170,7 +145,7 @@ form.addEventListener('submit', (e) => {
                 // Add event listener to the top download button
                 topDownloadButton.addEventListener('click', function() {
                     // Call the same function as the bottom button
-                    document.getElementById('downloadImageButton').click();
+                    handleDownloadClick();
                 });
             }
             
@@ -187,130 +162,10 @@ form.addEventListener('submit', (e) => {
     }
 });
 
-// Function to generate and open image
-function generateAndOpenImage() {
-    try {
-        // Always use desktop scale for consistent output
-        const scale = 2;
-        
-        // Simple configuration for html2canvas
-        html2canvas(document.getElementById('marksheet'), {
-            scale: scale,
-            backgroundColor: '#ffffff',
-            allowTaint: true,
-            useCORS: true,
-            onclone: function(clonedDoc) {
-                const clonedMarksheet = clonedDoc.getElementById('marksheet');
-                if (clonedMarksheet) {
-                    clonedMarksheet.style.display = 'block';
-                    
-                    // Ensure desktop layout even on mobile
-                    if (isMobileDevice()) {
-                        clonedMarksheet.style.minWidth = '1000px';
-                        clonedMarksheet.style.width = '1000px';
-                    }
-                    
-                    // Hide the logo in the cloned document before capture
-                    const logoContainer = clonedMarksheet.querySelector('.logo-container');
-                    if (logoContainer) {
-                        logoContainer.style.display = 'none';
-                    }
-                    
-                    // Adjust the header to center the title
-                    const header = clonedMarksheet.querySelector('.header');
-                    if (header) {
-                        header.style.justifyContent = 'center';
-                    }
-                    
-                    const title = clonedMarksheet.querySelector('.title');
-                    if (title) {
-                        title.style.margin = '0 auto';
-                    }
-                }
-            }
-        }).then(function(canvas) {
-            try {
-                const imgData = canvas.toDataURL('image/png');
-                const filename = `ICAI_Marksheet_${examDisplay.textContent.replace(/\s+/g, '_')}.png`;
-                
-                // Open in new tab
-                const newTab = window.open();
-                if (newTab) {
-                    newTab.document.write(`
-                        <html>
-                            <head>
-                                <title>ICAI Marksheet</title>
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                <style>
-                                    body { margin: 0; padding: 20px; text-align: center; background-color: #f5f5f5; }
-                                    img { max-width: 100%; height: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
-                                    p { font-family: Arial, sans-serif; margin-top: 20px; color: #333; }
-                                    .container { max-width: 800px; margin: 0 auto; }
-                                    .back-btn { 
-                                        display: inline-block; 
-                                        margin-top: 20px; 
-                                        padding: 10px 20px; 
-                                        background-color: #91008d; 
-                                        color: white; 
-                                        text-decoration: none; 
-                                        border-radius: 5px; 
-                                        font-weight: bold;
-                                    }
-                                </style>
-                            </head>
-                            <body>
-                                <div class="container">
-                                    <h2 style="color: #91008d;">Your ICAI Marksheet</h2>
-                                    <img src="${imgData}" alt="ICAI Marksheet">
-                                    <p>Press and hold on the image to save it to your device.</p>
-                                    <a href="javascript:window.close();" class="back-btn">Close</a>
-                                </div>
-                            </body>
-                        </html>
-                    `);
-                    newTab.document.close();
-                    
-                    // Hide loading message and marksheet
-                    const loadingMessage = document.getElementById('loadingMessage');
-                    if (loadingMessage) {
-                        loadingMessage.style.display = 'none';
-                    }
-                    marksheet.style.display = 'none';
-                } else {
-                    alert('Please allow pop-ups to view and save your marksheet.');
-                    
-                    // Show download buttons as fallback
-                    downloadButtons.style.display = 'flex';
-                    marksheet.style.display = 'none';
-                }
-            } catch (error) {
-                console.error('Error opening image:', error);
-                alert('Could not generate image. Please try again.');
-                
-                // Show download buttons as fallback
-                downloadButtons.style.display = 'flex';
-                marksheet.style.display = 'none';
-            }
-        }).catch(function(error) {
-            console.error('Canvas error:', error);
-            alert('Could not generate image. Please try again.');
-            
-            // Show download buttons as fallback
-            downloadButtons.style.display = 'flex';
-            marksheet.style.display = 'none';
-        });
-    } catch (error) {
-        console.error('General error:', error);
-        alert('An error occurred. Please try again.');
-        
-        // Show download buttons as fallback
-        downloadButtons.style.display = 'flex';
-        marksheet.style.display = 'none';
-    }
-}
-
-// Download as Image - for desktop only
-downloadImageButton.addEventListener('click', function() {
+// Function to handle download button click
+function handleDownloadClick() {
+    const downloadImageButton = document.getElementById('downloadImageButton');
+    
     // Show loading state
     downloadImageButton.disabled = true;
     downloadImageButton.textContent = 'Generating Image...';
@@ -356,6 +211,7 @@ downloadImageButton.addEventListener('click', function() {
             try {
                 // For desktop devices, use normal download
                 const link = document.createElement('a');
+                const examDisplay = document.getElementById('examDisplay');
                 const filename = `ICAI_Marksheet_${examDisplay.textContent.replace(/\s+/g, '_')}.png`;
                 link.download = filename;
                 link.href = canvas.toDataURL('image/png');
@@ -363,7 +219,7 @@ downloadImageButton.addEventListener('click', function() {
                 
                 // Reset button
                 downloadImageButton.disabled = false;
-                downloadImageButton.textContent = 'Download Marksheet';
+                downloadImageButton.innerHTML = '<i class="fas fa-download"></i> Download Marksheet';
                 
                 // Restore original display
                 marksheet.style.display = originalDisplay;
@@ -371,20 +227,205 @@ downloadImageButton.addEventListener('click', function() {
                 console.error('Download error:', error);
                 alert('Download failed. Please try again.');
                 downloadImageButton.disabled = false;
-                downloadImageButton.textContent = 'Download Marksheet';
+                downloadImageButton.innerHTML = '<i class="fas fa-download"></i> Download Marksheet';
                 marksheet.style.display = originalDisplay;
             }
         }).catch(function(error) {
             console.error('Canvas error:', error);
             alert('Could not generate image. Please try again.');
             downloadImageButton.disabled = false;
-            downloadImageButton.textContent = 'Download Marksheet';
+            downloadImageButton.innerHTML = '<i class="fas fa-download"></i> Download Marksheet';
             marksheet.style.display = originalDisplay;
         });
     } catch (error) {
         console.error('General error:', error);
         alert('An error occurred. Please try again.');
         downloadImageButton.disabled = false;
-        downloadImageButton.textContent = 'Download Marksheet';
+        downloadImageButton.innerHTML = '<i class="fas fa-download"></i> Download Marksheet';
+    }
+}
+
+// Function to generate and open image
+function generateAndOpenImage() {
+    try {
+        // Always use desktop scale for consistent output
+        const scale = 2;
+        
+        // Simple configuration for html2canvas
+        html2canvas(document.getElementById('marksheet'), {
+            scale: scale,
+            backgroundColor: '#ffffff',
+            allowTaint: true,
+            useCORS: true,
+            onclone: function(clonedDoc) {
+                const clonedMarksheet = clonedDoc.getElementById('marksheet');
+                if (clonedMarksheet) {
+                    clonedMarksheet.style.display = 'block';
+                    clonedMarksheet.style.position = 'static';
+                    clonedMarksheet.style.left = 'auto';
+                    
+                    // Ensure desktop layout even on mobile
+                    if (isMobileDevice()) {
+                        clonedMarksheet.style.minWidth = '1000px';
+                        clonedMarksheet.style.width = '1000px';
+                    }
+                    
+                    // Hide the logo in the cloned document before capture
+                    const logoContainer = clonedMarksheet.querySelector('.logo-container');
+                    if (logoContainer) {
+                        logoContainer.style.display = 'none';
+                    }
+                    
+                    // Adjust the header to center the title
+                    const header = clonedMarksheet.querySelector('.header');
+                    if (header) {
+                        header.style.justifyContent = 'center';
+                    }
+                    
+                    const title = clonedMarksheet.querySelector('.title');
+                    if (title) {
+                        title.style.margin = '0 auto';
+                    }
+                }
+            }
+        }).then(function(canvas) {
+            try {
+                const imgData = canvas.toDataURL('image/png');
+                const examDisplay = document.getElementById('examDisplay');
+                const filename = `ICAI_Marksheet_${examDisplay.textContent.replace(/\s+/g, '_')}.png`;
+                
+                // Open in new tab with simplified interface
+                const newTab = window.open();
+                if (newTab) {
+                    newTab.document.write(`
+                        <html>
+                            <head>
+                                <title>ICAI Marksheet</title>
+                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                                <style>
+                                    body { 
+                                        margin: 0; 
+                                        padding: 20px; 
+                                        text-align: center; 
+                                        background-color: #f5f5f5; 
+                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                    }
+                                    img { 
+                                        max-width: 100%; 
+                                        height: auto; 
+                                        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                                        border-radius: 8px;
+                                    }
+                                    h2 {
+                                        color: #91008d;
+                                        margin-bottom: 20px;
+                                    }
+                                    p { 
+                                        font-family: Arial, sans-serif; 
+                                        margin: 20px 0; 
+                                        color: #333;
+                                        line-height: 1.5;
+                                    }
+                                    .container { 
+                                        max-width: 800px; 
+                                        margin: 0 auto; 
+                                        background-color: white;
+                                        padding: 20px;
+                                        border-radius: 10px;
+                                        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                                    }
+                                    .instructions {
+                                        background-color: #f9f9f9;
+                                        padding: 15px;
+                                        border-radius: 8px;
+                                        margin: 20px 0;
+                                        border-left: 4px solid #91008d;
+                                    }
+                                    .back-btn { 
+                                        display: inline-block; 
+                                        margin-top: 20px; 
+                                        padding: 10px 20px; 
+                                        background-color: #91008d; 
+                                        color: white; 
+                                        text-decoration: none; 
+                                        border-radius: 5px; 
+                                        font-weight: bold;
+                                        transition: all 0.3s ease;
+                                    }
+                                    .back-btn:hover {
+                                        background-color: #7b0078;
+                                        transform: translateY(-2px);
+                                    }
+                                </style>
+                            </head>
+                            <body>
+                                <div class="container">
+                                    <h2>Your ICAI Marksheet</h2>
+                                    <img src="${imgData}" alt="ICAI Marksheet">
+                                    <div class="instructions">
+                                        <p><strong>To save this marksheet:</strong></p>
+                                        <p>• On iPhone/iPad: Press and hold on the image, then tap "Add to Photos"</p>
+                                        <p>• On Android: Press and hold on the image, then tap "Download image"</p>
+                                        <p>• On desktop: Right-click the image and select "Save image as..."</p>
+                                    </div>
+                                    <a href="javascript:window.close();" class="back-btn">Close</a>
+                                </div>
+                            </body>
+                        </html>
+                    `);
+                    newTab.document.close();
+                    
+                    // Reset form and UI
+                    resetFormAfterGeneration();
+                } else {
+                    alert('Please allow pop-ups to view and save your marksheet.');
+                    resetFormAfterGeneration();
+                }
+            } catch (error) {
+                console.error('Error opening image:', error);
+                alert('Could not generate image. Please try again.');
+                resetFormAfterGeneration();
+            }
+        }).catch(function(error) {
+            console.error('Canvas error:', error);
+            alert('Could not generate image. Please try again.');
+            resetFormAfterGeneration();
+        });
+    } catch (error) {
+        console.error('General error:', error);
+        alert('An error occurred. Please try again.');
+        resetFormAfterGeneration();
+    }
+}
+
+// Function to reset the form and UI after generation
+function resetFormAfterGeneration() {
+    // Reset the submit button
+    const submitButton = document.querySelector('#marksheetForm button[type="submit"]');
+    if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fas fa-file-alt"></i> Generate Marksheet';
+    }
+    
+    // Reset marksheet display
+    if (marksheet) {
+        marksheet.style.display = 'none';
+        marksheet.style.position = '';
+        marksheet.style.left = '';
+    }
+    
+    // Remove any loading messages
+    const loadingMessage = document.getElementById('loadingMessage');
+    if (loadingMessage) {
+        loadingMessage.style.display = 'none';
+    }
+}
+
+// Attach event listeners when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Attach click handler to the download button
+    const downloadImageButton = document.getElementById('downloadImageButton');
+    if (downloadImageButton) {
+        downloadImageButton.addEventListener('click', handleDownloadClick);
     }
 }); 
