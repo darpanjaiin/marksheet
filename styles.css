@@ -1,0 +1,351 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Input Form Styles */
+.input-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input-form h2 {
+    color: #91008d;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: #91008d;
+    outline: none;
+}
+
+button {
+    background-color: #91008d;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 30px auto 0;
+    min-width: 200px;
+}
+
+button:hover {
+    background-color: #7b0078;
+}
+
+/* Marksheet Styles */
+.marksheet {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.header {
+    background-color: #91008d;
+    color: white;
+    padding: 20px;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+.logo-container {
+    margin-right: 20px;
+}
+
+.logo {
+    width: 180px;
+    height: 180px;
+    display: block;
+    margin-right: 0;
+    margin-top: -30px;
+    margin-bottom: -30px;
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+}
+
+.title h1 {
+    font-size: 34px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.title h2 {
+    font-size: 18px;
+    margin-bottom: -2px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.result-title {
+    color: #91008d;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.result-content {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Roll Number row */
+.info-row {
+    display: flex;
+    border-bottom: 2px solid white;
+}
+
+.info-row:first-child {
+    background-color: #91008d;
+}
+
+.info-row:first-child .label {
+    width: 200px;
+    color: white;
+    padding: 12px 20px;
+    font-weight: bold;
+    border-right: 2px solid white;
+}
+
+.info-row:first-child .value {
+    flex: 1;
+    color: white;
+    padding: 12px 20px;
+}
+
+/* Name row */
+.info-row:nth-child(2) {
+    background-color: #ad5f9d;
+}
+
+.info-row:nth-child(2) .label {
+    width: 200px;
+    color: #efd486;
+    padding: 12px 20px;
+    font-weight: bold;
+    border-right: 2px solid white;
+}
+
+.info-row:nth-child(2) .value {
+    flex: 1;
+    color: #efd486;
+    padding: 12px 20px;
+    font-weight: bold;
+}
+
+/* Group Headers */
+.group h3 {
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: normal;
+    color: #333;
+    background-color: white;
+    border-bottom: 2px solid #ad5f9d;
+}
+
+/* Subject Rows */
+.subject-row {
+    display: flex;
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+.subject-row .subject {
+    flex: 1;
+    padding: 12px 20px;
+    font-size: 16.9px;
+}
+
+.subject-row .marks {
+    width: 300px;
+    text-align: left;
+    padding: 12px 20px;
+    border-left: 2px solid white;
+    font-size: 16.9px;
+}
+
+/* Alternating colors for subject rows */
+.subject-row:nth-child(odd) {
+    background-color: #ad5f9d;
+}
+
+.subject-row:nth-child(even) {
+    background-color: #91008d;
+}
+
+/* Total Row */
+.total-row {
+    display: flex;
+    background-color: #ad5f9d;
+    border-bottom: 2px solid white;
+    color: white;
+}
+
+.total-row .label {
+    flex: 1;
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 16.9px;
+}
+
+.total-row .value {
+    width: 300px;
+    text-align: left;
+    padding: 12px 20px;
+    border-left: 2px solid white;
+    font-weight: bold;
+    font-size: 16.9px;
+}
+
+/* Result Row */
+.result-row {
+    display: flex;
+    background-color: #91008d;
+    border-bottom: 2px solid white;
+}
+
+.result-row .label {
+    flex: 1;
+    padding: 12px 20px;
+    font-weight: bold;
+    color: #efd486;
+    font-size: 16.9px;
+}
+
+.result-row .value {
+    width: 300px;
+    text-align: left;
+    padding: 12px 20px;
+    border-left: 2px solid white;
+    font-weight: bold;
+    color: #efd486;
+    font-size: 16.9px;
+}
+
+/* Grand Total */
+.grand-total {
+    display: flex;
+    background-color: #91008d;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+.grand-total .label {
+    flex: 1;
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 16.9px;
+}
+
+.grand-total .value {
+    width: 300px;
+    text-align: left;
+    padding: 12px 20px;
+    border-left: 2px solid white;
+    font-weight: bold;
+    font-size: 16.9px;
+}
+
+/* Footer Styles */
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    padding: 0 20px;
+}
+
+.footer p {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.links {
+    margin: 20px 0;
+}
+
+.links a {
+    color: #91008d;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.hosted-by {
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.disclaimer {
+    font-size: 12px;
+    color: #666;
+    text-align: justify;
+    padding: 20px;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+}
+
+.download-buttons {
+    margin: 30px 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    display: none;
+}
+
+.download-buttons button {
+    margin: 0;
+} 

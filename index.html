@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICAI Marksheet Manifest</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="input-form">
+            <h2>ICAI Marksheet Manifest</h2>
+            <form id="marksheetForm">
+                <div class="form-group">
+                    <label for="examAttempt">Exam Attempt:</label>
+                    <select id="examAttempt" required>
+                        <option value="May 2025">May 2025</option>
+                        <option value="November 2025">November 2025</option>
+                        <option value="May 2026">May 2026</option>
+                        <option value="November 2026">November 2026</option>
+                        <option value="May 2027">May 2027</option>
+                        <option value="November 2027">November 2027</option>
+                        <option value="May 2028">May 2028</option>
+                        <option value="November 2028">November 2028</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rollNumber">Roll Number:</label>
+                    <input type="text" id="rollNumber" required placeholder="Enter 6-digit roll number">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required placeholder="Enter your full name">
+                </div>
+                
+                <h3>Group I</h3>
+                <div class="form-group">
+                    <label for="fr">Financial Reporting:</label>
+                    <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+                <div class="form-group">
+                    <label for="afm">Advanced Financial Management:</label>
+                    <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+                <div class="form-group">
+                    <label for="aaa">Advanced Auditing and Assurance:</label>
+                    <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+
+                <h3>Group II</h3>
+                <div class="form-group">
+                    <label for="dtit">Direct Tax and International Taxation:</label>
+                    <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+                <div class="form-group">
+                    <label for="itl">Indirect Tax Laws:</label>
+                    <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+                <div class="form-group">
+                    <label for="ibs">Integrated Business Solutions:</label>
+                    <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+
+                <button type="submit">Generate Marksheet</button>
+            </form>
+        </div>
+
+        <div id="marksheet" class="marksheet" style="display: none;">
+            <div class="header">
+                <div class="logo-container">
+                    <img src="assets/icai-logo.png" alt="ICAI Logo" class="logo">
+                </div>
+                <div class="title">
+                    <h1>The Institute of Chartered Accountants of India</h1>
+                    <h2>Examination Results, <span id="examDisplay">November 2023</span></h2>
+                </div>
+            </div>
+
+            <h2 class="result-title">Final Examination Results, <span id="examTitleDisplay">November 2023</span></h2>
+
+            <div class="result-content">
+                <div class="info-row">
+                    <div class="label">Roll Number</div>
+                    <div class="value" id="displayRollNumber"></div>
+                </div>
+                <div class="info-row">
+                    <div class="label">Name</div>
+                    <div class="value" id="displayName"></div>
+                </div>
+
+                <div class="group">
+                    <h3>Group I</h3>
+                    <div class="subject-row">
+                        <div class="subject">Financial Reporting</div>
+                        <div class="marks" id="displayFR"></div>
+                    </div>
+                    <div class="subject-row">
+                        <div class="subject">Advanced Financial Management</div>
+                        <div class="marks" id="displayAFM"></div>
+                    </div>
+                    <div class="subject-row">
+                        <div class="subject">Advanced Auditing and Assurance</div>
+                        <div class="marks" id="displayAAA"></div>
+                    </div>
+                    <div class="total-row">
+                        <div class="label">Total</div>
+                        <div class="value" id="group1Total"></div>
+                    </div>
+                    <div class="result-row">
+                        <div class="label">Result</div>
+                        <div class="value" id="group1Result">SUCCESSFUL</div>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <h3>Group II</h3>
+                    <div class="subject-row">
+                        <div class="subject">Direct Tax and International Taxation</div>
+                        <div class="marks" id="displayDTIT"></div>
+                    </div>
+                    <div class="subject-row">
+                        <div class="subject">Indirect Tax Laws</div>
+                        <div class="marks" id="displayITL"></div>
+                    </div>
+                    <div class="subject-row">
+                        <div class="subject">Integrated Business Solutions</div>
+                        <div class="marks" id="displayIBS"></div>
+                    </div>
+                    <div class="total-row">
+                        <div class="label">Total</div>
+                        <div class="value" id="group2Total"></div>
+                    </div>
+                    <div class="result-row">
+                        <div class="label">Result</div>
+                        <div class="value" id="group2Result">SUCCESSFUL</div>
+                    </div>
+                </div>
+
+                <div class="grand-total">
+                    <div class="label">Grand Total</div>
+                    <div class="value" id="grandTotal"></div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>'E' Indicates Marks obtained in an earlier attempt</p>
+                <p>'<' Indicates passed under CA Regulations, 1988.</p>
+                <div class="links">
+                    <a href="#">Check Another Roll Number</a> |
+                    <a href="#">Home</a>
+                </div>
+                <div class="hosted-by">
+                    <p>Hosted by National Informatics Centre</p>
+                </div>
+                <div class="disclaimer">
+                    <p>Disclaimer: The result given is correct at the time of release of the result by the Institute which accepts no responsibility thereafter for errors or omissions caused as a result of their transmission via the Internet or their downloading or printing by the user. No material from this web site can be copied, reproduced, published, uploaded, posted, transmitted or distributed or dealt with in any manner, unless expressly authorized. Users are not permitted to change, modify or prepare derivative works from the content.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="download-buttons" style="display: none;">
+            <button id="downloadImage">Download Marksheet</button>
+        </div>
+    </div>
+
+    <!-- Add scripts at the end of body -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
