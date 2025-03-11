@@ -137,8 +137,8 @@ downloadImageButton.addEventListener('click', function() {
         const originalDisplay = marksheet.style.display;
         marksheet.style.display = 'block';
         
-        // Adjust scale based on device type
-        const scale = isMobileDevice() ? 1 : 2;
+        // Always use desktop scale for consistent output
+        const scale = 2;
         
         // Simple configuration for html2canvas
         html2canvas(document.getElementById('marksheet'), {
@@ -150,6 +150,12 @@ downloadImageButton.addEventListener('click', function() {
                 const clonedMarksheet = clonedDoc.getElementById('marksheet');
                 if (clonedMarksheet) {
                     clonedMarksheet.style.display = 'block';
+                    
+                    // Ensure desktop layout even on mobile
+                    if (isMobileDevice()) {
+                        clonedMarksheet.style.minWidth = '1000px';
+                        clonedMarksheet.style.width = '1000px';
+                    }
                     
                     // Hide the logo in the cloned document before capture
                     const logoContainer = clonedMarksheet.querySelector('.logo-container');
@@ -166,15 +172,6 @@ downloadImageButton.addEventListener('click', function() {
                     const title = clonedMarksheet.querySelector('.title');
                     if (title) {
                         title.style.margin = '0 auto';
-                    }
-                    
-                    // For mobile, ensure the marksheet fits well
-                    if (isMobileDevice()) {
-                        const rows = clonedMarksheet.querySelectorAll('.subject-row, .total-row, .result-row');
-                        rows.forEach(row => {
-                            row.style.display = 'flex';
-                            row.style.flexWrap = 'nowrap';
-                        });
                     }
                 }
             }

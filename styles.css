@@ -361,117 +361,43 @@ button:hover {
         padding: 20px;
     }
     
+    /* Make container scrollable horizontally to preserve desktop layout */
+    .container {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+    
+    .marksheet {
+        min-width: 1000px; /* Ensure minimum width matches desktop */
+    }
+    
+    /* Keep all desktop styles for the marksheet */
     .header {
-        flex-direction: column;
-        padding: 15px;
-        text-align: center;
+        flex-direction: row;
+        padding: 20px;
     }
     
     .logo-container {
-        margin-right: 0;
-        margin-bottom: 10px;
+        margin-right: 20px;
     }
     
     .logo {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
+        width: 180px;
+        height: 180px;
+        margin-top: -30px;
+        margin-bottom: -30px;
     }
     
     .title h1 {
-        font-size: 24px;
+        font-size: 34px;
     }
     
     .title h2 {
-        font-size: 16px;
-    }
-    
-    .result-title {
-        font-size: 20px;
-        padding: 15px 0;
-    }
-    
-    .info-row .label, 
-    .total-row .label, 
-    .result-row .label, 
-    .grand-total .label {
-        width: 120px;
-        font-size: 14px;
-        padding: 10px;
-    }
-    
-    .info-row .value, 
-    .total-row .value, 
-    .result-row .value, 
-    .grand-total .value {
-        font-size: 14px;
-        padding: 10px;
-    }
-    
-    .subject-row .subject {
-        font-size: 14px;
-        padding: 10px;
-    }
-    
-    .subject-row .marks {
-        width: 120px;
-        font-size: 14px;
-        padding: 10px;
-    }
-    
-    .group h3 {
-        font-size: 16px;
-        padding: 10px;
-    }
-    
-    .footer {
-        padding: 15px;
-    }
-    
-    .footer p {
-        font-size: 12px;
-    }
-    
-    .disclaimer p {
-        font-size: 10px;
+        font-size: 18px;
     }
 }
 
-/* Small Mobile Devices */
+/* Remove small mobile styles to maintain desktop layout */
 @media screen and (max-width: 480px) {
-    .title h1 {
-        font-size: 20px;
-    }
-    
-    .title h2 {
-        font-size: 14px;
-    }
-    
-    .info-row .label, 
-    .total-row .label, 
-    .result-row .label, 
-    .grand-total .label {
-        width: 100px;
-        font-size: 12px;
-        padding: 8px;
-    }
-    
-    .info-row .value, 
-    .total-row .value, 
-    .result-row .value, 
-    .grand-total .value {
-        font-size: 12px;
-        padding: 8px;
-    }
-    
-    .subject-row .subject {
-        font-size: 12px;
-        padding: 8px;
-    }
-    
-    .subject-row .marks {
-        width: 80px;
-        font-size: 12px;
-        padding: 8px;
-    }
+    /* Keep the same styles as the tablet breakpoint */
 } 
