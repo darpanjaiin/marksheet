@@ -17,7 +17,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--text-color);
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
     background-image: linear-gradient(to right, rgba(145, 0, 141, 0.05) 1px, transparent 1px),
@@ -33,11 +33,10 @@ body {
     padding: 0;
 }
 
-/* Modern Input Form */
+/* Modern Input Form - without container background */
 .input-form {
-    background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+    background: transparent;
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
     padding: 2rem;
     margin: 2rem auto;
     max-width: 800px;
@@ -56,6 +55,7 @@ body {
     font-size: 2rem;
     position: relative;
     padding-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .input-form h2:after {
@@ -68,6 +68,7 @@ body {
     height: 3px;
     background-color: var(--primary-color);
     border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .input-form h3 {
@@ -79,14 +80,16 @@ body {
     padding-left: 10px;
     position: relative;
     transition: var(--transition);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .input-form h3:hover {
     transform: translateX(5px);
+    color: var(--primary-color);
 }
 
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     position: relative;
 }
 
@@ -94,19 +97,24 @@ body {
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.95rem;
     transition: var(--transition);
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
+/* Stylish Input Fields - From Uiverse.io by anniekoop */
 .form-group input,
 .form-group select {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     width: 100%;
-    padding: 0.8rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
+    padding: 0.875rem;
     font-size: 1rem;
-    transition: var(--transition);
+    border: 1.5px solid #000;
+    border-radius: 0.5rem;
+    box-shadow: 2.5px 3px 0 #000;
+    outline: none;
+    transition: ease 0.25s;
     background-color: white;
     color: var(--text-color);
     box-sizing: border-box;
@@ -114,14 +122,14 @@ body {
 
 .form-group input:focus,
 .form-group select:focus {
+    box-shadow: 5.5px 7px 0 black;
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(145, 0, 141, 0.1);
+    border-color: #000;
 }
 
-.form-group input:focus + label,
-.form-group select:focus + label {
-    color: var(--primary-color);
+.form-group input:hover,
+.form-group select:hover {
+    box-shadow: 3.5px 5px 0 #000;
 }
 
 .form-group input::placeholder {
@@ -144,6 +152,14 @@ body {
     flex-wrap: wrap;
     margin: 0 -10px;
     transition: var(--transition);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.form-row:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 .form-col {
@@ -152,40 +168,39 @@ body {
     min-width: 200px;
 }
 
-/* Submit button styling */
+/* Update submit button to match input style */
 #marksheetForm button[type="submit"] {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: black;
+    border: 1.5px solid #000;
+    padding: 0.875rem 2rem;
     font-size: 1.1rem;
-    border-radius: var(--border-radius);
+    border-radius: 0.5rem;
+    box-shadow: 2.5px 3px 0 #000;
     cursor: pointer;
     display: block;
     width: 100%;
     max-width: 300px;
     margin: 2rem auto 0;
-    transition: var(--transition);
+    transition: ease 0.25s;
     font-weight: 600;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 6px rgba(145, 0, 141, 0.2);
 }
 
 #marksheetForm button[type="submit"]:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(145, 0, 141, 0.3);
+    box-shadow: 5.5px 7px 0 black;
 }
 
 #marksheetForm button[type="submit"]:hover {
-    background-color: var(--primary-light);
+    box-shadow: 3.5px 5px 0 #000;
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(145, 0, 141, 0.3);
-    animation: pulse-button 1s infinite;
 }
 
 #marksheetForm button[type="submit"]:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(145, 0, 141, 0.2);
+    box-shadow: 1px 1px 0 #000;
 }
 
 /* Download buttons styling */
@@ -195,35 +210,38 @@ body {
     margin: 1.5rem 0;
 }
 
+/* Update download buttons to match the style */
 .download-buttons button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: black;
+    border: 1.5px solid #000;
+    padding: 0.875rem 1.5rem;
     font-size: 1rem;
-    border-radius: var(--border-radius);
+    border-radius: 0.5rem;
+    box-shadow: 2.5px 3px 0 #000;
     cursor: pointer;
-    transition: var(--transition);
+    transition: ease 0.25s;
     font-weight: 600;
-    box-shadow: 0 4px 6px rgba(145, 0, 141, 0.2);
 }
 
 .download-buttons button:hover {
-    background-color: var(--primary-light);
+    box-shadow: 3.5px 5px 0 #000;
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(145, 0, 141, 0.3);
 }
 
 .download-buttons button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(145, 0, 141, 0.2);
+    box-shadow: 1px 1px 0 #000;
 }
 
 .download-buttons button:disabled {
-    background-color: #ccc;
+    background-color: #f0f0f0;
+    color: #999;
+    border-color: #999;
     cursor: not-allowed;
     transform: none;
-    box-shadow: none;
+    box-shadow: 1px 1px 0 #999;
 }
 
 /* Loading message styling */
@@ -249,12 +267,16 @@ body {
     }
 }
 
-/* Marksheet Styles */
+/* Marksheet with rounded corners */
 .marksheet {
     background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none;
-    overflow: hidden; /* Prevent content overflow */
+    padding: 30px;
+    border: 1px solid #ddd;
+    margin: 0 auto 30px;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden; /* Ensures content respects the rounded corners */
 }
 
 .header {
@@ -584,15 +606,7 @@ body {
 /* Enhance form groups with subtle hover effect */
 .form-group:hover label {
     color: var(--primary-color);
+    transform: translateY(-2px);
 }
 
-/* Add subtle shadow to form on hover */
-.input-form:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    transition: var(--transition);
-}
-
-/* Add subtle transition to form rows */
-.form-row {
-    transition: var(--transition);
-} 
+/* Remove duplicate form-row styles */ 

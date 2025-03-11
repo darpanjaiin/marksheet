@@ -60,8 +60,8 @@ form.addEventListener('submit', (e) => {
     
     // Get form values
     const examAttempt = document.getElementById('examAttempt').value;
-    // Generate a random 6-digit roll number
-    const rollNumber = Math.floor(100000 + Math.random() * 900000).toString();
+    // Keep roll number blank
+    const rollNumber = "";
     const name = document.getElementById('name').value;
     
     // Get marks
@@ -168,7 +168,7 @@ function handleDownloadClick() {
     
     // Show loading state
     downloadImageButton.disabled = true;
-    downloadImageButton.textContent = 'Generating Image...';
+    downloadImageButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating Image...';
     
     try {
         // Make sure the marksheet is visible for capture
@@ -184,6 +184,7 @@ function handleDownloadClick() {
             backgroundColor: '#ffffff',
             allowTaint: true,
             useCORS: true,
+            borderRadius: 16 * scale, // Scale the border radius with the image scale
             onclone: function(clonedDoc) {
                 const clonedMarksheet = clonedDoc.getElementById('marksheet');
                 if (clonedMarksheet) {
@@ -257,6 +258,7 @@ function generateAndOpenImage() {
             backgroundColor: '#ffffff',
             allowTaint: true,
             useCORS: true,
+            borderRadius: 16 * scale, // Scale the border radius with the image scale
             onclone: function(clonedDoc) {
                 const clonedMarksheet = clonedDoc.getElementById('marksheet');
                 if (clonedMarksheet) {
@@ -314,7 +316,7 @@ function generateAndOpenImage() {
                                         max-width: 100%; 
                                         height: auto; 
                                         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-                                        border-radius: 8px;
+                                        border-radius: 16px;
                                     }
                                     h2 {
                                         color: #91008d;
@@ -331,13 +333,13 @@ function generateAndOpenImage() {
                                         margin: 0 auto; 
                                         background-color: white;
                                         padding: 20px;
-                                        border-radius: 10px;
+                                        border-radius: 16px;
                                         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
                                     }
                                     .instructions {
                                         background-color: #f9f9f9;
                                         padding: 15px;
-                                        border-radius: 8px;
+                                        border-radius: 12px;
                                         margin: 20px 0;
                                         border-left: 4px solid #91008d;
                                     }
@@ -345,15 +347,17 @@ function generateAndOpenImage() {
                                         display: inline-block; 
                                         margin-top: 20px; 
                                         padding: 10px 20px; 
-                                        background-color: #91008d; 
-                                        color: white; 
+                                        background-color: white;
+                                        color: black;
+                                        border: 1.5px solid #000;
                                         text-decoration: none; 
-                                        border-radius: 5px; 
+                                        border-radius: 0.5rem;
+                                        box-shadow: 2.5px 3px 0 #000;
                                         font-weight: bold;
-                                        transition: all 0.3s ease;
+                                        transition: ease 0.25s;
                                     }
                                     .back-btn:hover {
-                                        background-color: #7b0078;
+                                        box-shadow: 3.5px 5px 0 #000;
                                         transform: translateY(-2px);
                                     }
                                 </style>
@@ -363,10 +367,7 @@ function generateAndOpenImage() {
                                     <h2>Your ICAI Marksheet</h2>
                                     <img src="${imgData}" alt="ICAI Marksheet">
                                     <div class="instructions">
-                                        <p><strong>To save this marksheet:</strong></p>
-                                        <p>• On iPhone/iPad: Press and hold on the image, then tap "Add to Photos"</p>
-                                        <p>• On Android: Press and hold on the image, then tap "Download image"</p>
-                                        <p>• On desktop: Right-click the image and select "Save image as..."</p>
+                                        <p><strong>Press and Hold the Image to Save</strong></p>
                                     </div>
                                     <a href="javascript:window.close();" class="back-btn">Close</a>
                                 </div>
@@ -400,24 +401,18 @@ function generateAndOpenImage() {
 
 // Function to reset the form and UI after generation
 function resetFormAfterGeneration() {
-    // Reset the submit button
+    // Re-enable the submit button
     const submitButton = document.querySelector('#marksheetForm button[type="submit"]');
     if (submitButton) {
         submitButton.disabled = false;
         submitButton.innerHTML = '<i class="fas fa-file-alt"></i> Generate Marksheet';
     }
     
-    // Reset marksheet display
-    if (marksheet) {
+    // For mobile: Reset the marksheet that was positioned off-screen for capture
+    if (isMobileDevice() && marksheet) {
         marksheet.style.display = 'none';
         marksheet.style.position = '';
         marksheet.style.left = '';
-    }
-    
-    // Remove any loading messages
-    const loadingMessage = document.getElementById('loadingMessage');
-    if (loadingMessage) {
-        loadingMessage.style.display = 'none';
     }
 }
 
