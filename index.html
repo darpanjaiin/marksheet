@@ -5,63 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ICAI Marksheet Manifest</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <div class="input-form">
             <h2>ICAI Marksheet Manifest</h2>
             <form id="marksheetForm">
-                <div class="form-group">
-                    <label for="examAttempt">Exam Attempt:</label>
-                    <select id="examAttempt" required>
-                        <option value="May 2025">May 2025</option>
-                        <option value="November 2025">November 2025</option>
-                        <option value="May 2026">May 2026</option>
-                        <option value="November 2026">November 2026</option>
-                        <option value="May 2027">May 2027</option>
-                        <option value="November 2027">November 2027</option>
-                        <option value="May 2028">May 2028</option>
-                        <option value="November 2028">November 2028</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="examAttempt"><i class="fas fa-calendar-alt"></i> Exam Attempt</label>
+                            <select id="examAttempt" required>
+                                <option value="May 2025">May 2025</option>
+                                <option value="November 2025">November 2025</option>
+                                <option value="May 2026">May 2026</option>
+                                <option value="November 2026">November 2026</option>
+                                <option value="May 2027">May 2027</option>
+                                <option value="November 2027">November 2027</option>
+                                <option value="May 2028">May 2028</option>
+                                <option value="November 2028">November 2028</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="rollNumber"><i class="fas fa-id-card"></i> Roll Number</label>
+                            <input type="text" id="rollNumber" required placeholder="Enter 6-digit roll number">
+                        </div>
+                    </div>
                 </div>
+                
                 <div class="form-group">
-                    <label for="rollNumber">Roll Number:</label>
-                    <input type="text" id="rollNumber" required placeholder="Enter 6-digit roll number">
-                </div>
-                <div class="form-group">
-                    <label for="name">Name:</label>
+                    <label for="name"><i class="fas fa-user"></i> Full Name</label>
                     <input type="text" id="name" required placeholder="Enter your full name">
                 </div>
                 
-                <h3>Group I</h3>
-                <div class="form-group">
-                    <label for="fr">Financial Reporting:</label>
-                    <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
-                </div>
-                <div class="form-group">
-                    <label for="afm">Advanced Financial Management:</label>
-                    <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
-                </div>
-                <div class="form-group">
-                    <label for="aaa">Advanced Auditing and Assurance:</label>
-                    <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
-                </div>
-
-                <h3>Group II</h3>
-                <div class="form-group">
-                    <label for="dtit">Direct Tax and International Taxation:</label>
-                    <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
-                </div>
-                <div class="form-group">
-                    <label for="itl">Indirect Tax Laws:</label>
-                    <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
-                </div>
-                <div class="form-group">
-                    <label for="ibs">Integrated Business Solutions:</label>
-                    <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                <h3><i class="fas fa-book"></i> Group I</h3>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="fr">Financial Reporting</label>
+                            <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="afm">Advanced Financial Management</label>
+                            <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="aaa">Advanced Auditing and Assurance</label>
+                            <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit">Generate Marksheet</button>
+                <h3><i class="fas fa-book"></i> Group II</h3>
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="dtit">Direct Tax and International Taxation</label>
+                            <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="itl">Indirect Tax Laws</label>
+                            <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="ibs">Integrated Business Solutions</label>
+                            <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit"><i class="fas fa-file-alt"></i> Generate Marksheet</button>
             </form>
         </div>
 
@@ -159,7 +183,7 @@
         </div>
 
         <div class="download-buttons" style="display: none;">
-            <button id="downloadImageButton">Download Marksheet</button>
+            <button id="downloadImageButton"><i class="fas fa-download"></i> Download Marksheet</button>
         </div>
     </div>
 

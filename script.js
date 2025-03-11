@@ -165,6 +165,7 @@ form.addEventListener('submit', (e) => {
             const topDownloadButton = topDownloadButtons.querySelector('#downloadImageButton');
             if (topDownloadButton) {
                 topDownloadButton.id = 'topDownloadImageButton';
+                topDownloadButton.innerHTML = '<i class="fas fa-download"></i> Download Marksheet';
                 
                 // Add event listener to the top download button
                 topDownloadButton.addEventListener('click', function() {
