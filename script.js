@@ -58,10 +58,10 @@ const examSubjects = {
     },
     'CA Foundation': {
         subjects: [
-            { id: 'accounting_f', name: 'Principles and Practice of Accounting' },
-            { id: 'law_f', name: 'Business Laws and Business Correspondence and Reporting' },
-            { id: 'maths_f', name: 'Business Mathematics, Logical Reasoning and Statistics' },
-            { id: 'economics_f', name: 'Business Economics and Business and Commercial Knowledge' }
+            { id: 'accounting_f', name: 'Accounting' },
+            { id: 'law_f', name: 'Business Laws' },
+            { id: 'maths_f', name: 'Quantitative Aptitude (Maths)' },
+            { id: 'economics_f', name: 'Business Economics' }
         ]
     }
 };
