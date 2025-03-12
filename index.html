@@ -13,16 +13,18 @@
             <h2>ICAI Marksheet Manifest</h2>
             <form id="marksheetForm">
                 <div class="form-group">
+                    <label for="examType"><i class="fas fa-graduation-cap"></i> Select Exam</label>
+                    <select id="examType" required>
+                        <option value="CA Final">CA Final</option>
+                        <option value="CA Intermediate">CA Intermediate</option>
+                        <option value="CA Foundation">CA Foundation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label for="examAttempt"><i class="fas fa-calendar-alt"></i> Exam Attempt</label>
                     <select id="examAttempt" required>
-                        <option value="May 2025">May 2025</option>
-                        <option value="November 2025">November 2025</option>
-                        <option value="May 2026">May 2026</option>
-                        <option value="November 2026">November 2026</option>
-                        <option value="May 2027">May 2027</option>
-                        <option value="November 2027">November 2027</option>
-                        <option value="May 2028">May 2028</option>
-                        <option value="November 2028">November 2028</option>
+                        <!-- Options will be populated dynamically based on exam type -->
                     </select>
                 </div>
                 
@@ -31,46 +33,129 @@
                     <input type="text" id="name" required placeholder="Enter your full name">
                 </div>
                 
-                <h3><i class="fas fa-book"></i> Group I</h3>
-                <div class="form-row">
-                    <div class="form-col">
-                        <div class="form-group">
-                            <label for="fr">Financial Reporting</label>
-                            <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
+                <!-- CA Final Subjects -->
+                <div id="caFinalSubjects">
+                    <h3><i class="fas fa-book"></i> Group I</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="fr">Financial Reporting</label>
+                                <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="afm">Advanced Financial Management</label>
+                                <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="aaa">Advanced Auditing and Assurance</label>
+                                <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-col">
-                        <div class="form-group">
-                            <label for="afm">Advanced Financial Management</label>
-                            <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
+
+                    <h3><i class="fas fa-book"></i> Group II</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="dtit">Direct Tax & International Taxation</label>
+                                <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-col">
-                        <div class="form-group">
-                            <label for="aaa">Advanced Auditing and Assurance</label>
-                            <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="itl">Indirect Tax Laws</label>
+                                <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="ibs">Integrated Business Solutions</label>
+                                <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                            </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- CA Intermediate Subjects -->
+                <div id="caIntermediateSubjects" style="display: none;">
+                    <h3><i class="fas fa-book"></i> Group I</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="accounting">Accounting</label>
+                                <input type="number" id="accounting" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="corporateLaws">Corporate and Other Laws</label>
+                                <input type="number" id="corporateLaws" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="taxation">Taxation</label>
+                                <input type="number" id="taxation" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                    </div>
 
-                <h3><i class="fas fa-book"></i> Group II</h3>
-                <div class="form-row">
-                    <div class="form-col">
-                        <div class="form-group">
-                            <label for="dtit">Direct Tax & International Taxation</label>
-                            <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
+                    <h3><i class="fas fa-book"></i> Group II</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="costAccounting">Cost and Management Accounting</label>
+                                <input type="number" id="costAccounting" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="auditing">Auditing and Assurance</label>
+                                <input type="number" id="auditing" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="fm">Financial Management & Strategic Management</label>
+                                <input type="number" id="fm" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-col">
-                        <div class="form-group">
-                            <label for="itl">Indirect Tax Laws</label>
-                            <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
+                </div>
+                
+                <!-- CA Foundation Subjects -->
+                <div id="caFoundationSubjects" style="display: none;">
+                    <h3><i class="fas fa-book"></i> Subjects</h3>
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="accounting_f">Principles and Practice of Accounting</label>
+                                <input type="number" id="accounting_f" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="law_f">Business Laws and Business Correspondence and Reporting</label>
+                                <input type="number" id="law_f" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-col">
-                        <div class="form-group">
-                            <label for="ibs">Integrated Business Solutions</label>
-                            <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="maths_f">Business Mathematics, Logical Reasoning and Statistics</label>
+                                <input type="number" id="maths_f" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="economics_f">Business Economics and Business and Commercial Knowledge</label>
+                                <input type="number" id="economics_f" min="0" max="100" placeholder="Enter marks (0-100)">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,7 +175,7 @@
                 </div>
             </div>
 
-            <h2 class="result-title">Final Examination Results, <span id="examTitleDisplay">November 2023</span></h2>
+            <h2 class="result-title"><span id="examTypeDisplay">Final</span> Examination Results, <span id="examTitleDisplay">November 2023</span></h2>
 
             <div class="result-content">
                 <div class="info-row">
@@ -102,51 +187,54 @@
                     <div class="value" id="displayName"></div>
                 </div>
 
-                <div class="group">
-                    <h3>Group I</h3>
-                    <div class="subject-row">
-                        <div class="subject">Financial Reporting</div>
-                        <div class="marks" id="displayFR"></div>
+                <!-- CA Final and Intermediate have Group I and Group II -->
+                <div id="groupedSubjects">
+                    <div class="group">
+                        <h3>Group I</h3>
+                        <div id="group1Subjects">
+                            <!-- Subject rows will be populated dynamically -->
+                        </div>
+                        <div class="total-row">
+                            <div class="label">Total</div>
+                            <div class="value" id="group1Total"></div>
+                        </div>
+                        <div class="result-row">
+                            <div class="label">Result</div>
+                            <div class="value" id="group1Result">SUCCESSFUL</div>
+                        </div>
                     </div>
-                    <div class="subject-row">
-                        <div class="subject">Advanced Financial Management</div>
-                        <div class="marks" id="displayAFM"></div>
-                    </div>
-                    <div class="subject-row">
-                        <div class="subject">Advanced Auditing and Assurance</div>
-                        <div class="marks" id="displayAAA"></div>
-                    </div>
-                    <div class="total-row">
-                        <div class="label">Total</div>
-                        <div class="value" id="group1Total"></div>
-                    </div>
-                    <div class="result-row">
-                        <div class="label">Result</div>
-                        <div class="value" id="group1Result">SUCCESSFUL</div>
+
+                    <div class="group">
+                        <h3>Group II</h3>
+                        <div id="group2Subjects">
+                            <!-- Subject rows will be populated dynamically -->
+                        </div>
+                        <div class="total-row">
+                            <div class="label">Total</div>
+                            <div class="value" id="group2Total"></div>
+                        </div>
+                        <div class="result-row">
+                            <div class="label">Result</div>
+                            <div class="value" id="group2Result">SUCCESSFUL</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="group">
-                    <h3>Group II</h3>
-                    <div class="subject-row">
-                        <div class="subject">Direct Tax & International Taxation</div>
-                        <div class="marks" id="displayDTIT"></div>
-                    </div>
-                    <div class="subject-row">
-                        <div class="subject">Indirect Tax Laws</div>
-                        <div class="marks" id="displayITL"></div>
-                    </div>
-                    <div class="subject-row">
-                        <div class="subject">Integrated Business Solutions</div>
-                        <div class="marks" id="displayIBS"></div>
-                    </div>
-                    <div class="total-row">
-                        <div class="label">Total</div>
-                        <div class="value" id="group2Total"></div>
-                    </div>
-                    <div class="result-row">
-                        <div class="label">Result</div>
-                        <div class="value" id="group2Result">SUCCESSFUL</div>
+                <!-- CA Foundation has a single group -->
+                <div id="foundationSubjects" style="display: none;">
+                    <div class="group">
+                        <h3>Subjects</h3>
+                        <div id="foundationSubjectsList">
+                            <!-- Subject rows will be populated dynamically -->
+                        </div>
+                        <div class="total-row">
+                            <div class="label">Total</div>
+                            <div class="value" id="foundationTotal"></div>
+                        </div>
+                        <div class="result-row">
+                            <div class="label">Result</div>
+                            <div class="value" id="foundationResult">SUCCESSFUL</div>
+                        </div>
                     </div>
                 </div>
 

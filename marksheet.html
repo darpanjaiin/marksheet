@@ -101,18 +101,19 @@
         window.addEventListener('DOMContentLoaded', function() {
             const marksheetImage = localStorage.getItem('marksheetImage');
             const studentName = localStorage.getItem('studentName');
+            const examType = localStorage.getItem('examType') || 'Final';
             
             // Update the heading with the student's name if available
             if (studentName) {
                 document.getElementById('personalizedHeading').textContent = 
-                    `CA ${studentName}, Dream Big, Manifest Your Win!`;
+                    `CA ${studentName}, Dream Big, Manifest Your ${examType} Win!`;
             }
             
             if (marksheetImage) {
                 // Create and add the image
                 const imgElement = document.createElement('img');
                 imgElement.src = marksheetImage;
-                imgElement.alt = "ICAI Marksheet";
+                imgElement.alt = `ICAI ${examType} Marksheet`;
                 document.getElementById('marksheetImageContainer').appendChild(imgElement);
                 
                 // Set up download button
@@ -120,7 +121,7 @@
                 if (downloadButton) {
                     downloadButton.addEventListener('click', function() {
                         const link = document.createElement('a');
-                        link.download = 'ICAI_Marksheet.png';
+                        link.download = `ICAI_${examType}_Marksheet.png`;
                         link.href = marksheetImage;
                         link.click();
                     });

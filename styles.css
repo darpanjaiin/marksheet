@@ -418,11 +418,11 @@ body {
 
 /* Alternating colors for subject rows */
 .subject-row:nth-child(odd) {
-    background-color: #ad5f9d;
+    background-color: #91008d;
 }
 
 .subject-row:nth-child(even) {
-    background-color: #91008d;
+    background-color: #ad5f9d;
 }
 
 /* Total Row */
@@ -477,7 +477,7 @@ body {
 /* Grand Total */
 .grand-total {
     display: flex;
-    background-color: #91008d;
+    background-color: #ad5f9d;
     color: white;
     border-bottom: 2px solid white;
 }
