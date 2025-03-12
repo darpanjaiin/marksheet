@@ -13,6 +13,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ICAI Marksheet</title>
+    <link rel="icon" type="image/jpg" href="assets/favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { 
             margin: 0; 
@@ -28,9 +30,6 @@
         img { 
             max-width: 100%; 
             height: auto; 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            border-radius: 0;
-            margin-bottom: 20px;
         }
         h2 {
             color: #91008d;
@@ -87,8 +86,9 @@
         
         /* Additional styles to match the ICAI marksheet in the image */
         #marksheetImageContainer img {
-            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             border-radius: 0;
+            margin-bottom: 20px;
         }
         
         /* Sharing message styling */
@@ -128,6 +128,58 @@
             50% { transform: scale(1.2); opacity: 0.9; }
             100% { transform: scale(1); opacity: 1; }
         }
+
+        /* Site Footer */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            color: var(--text-color);
+        }
+
+        .site-footer p {
+            margin-bottom: 1rem;
+        }
+
+        .site-footer a {
+            color: #0056b3;
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+
+        .site-footer a:hover {
+            color: #003d80;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icon {
+            width: 1.4rem;
+            height: 1.4rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover .social-icon {
+            transform: translateY(-2px);
+            filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+        }
+
+        /* Define transition variable since we're not importing styles.css */
+        :root {
+            --transition: all 0.3s ease;
+            --text-color: #333;
+        }
     </style>
 </head>
 <body>
@@ -141,6 +193,15 @@
         </div>
         <p class="mobile-instructions">Press and hold the image to save</p>
     </div>
+
+    <footer class="site-footer">
+        <p>Made with 💖 by <a href="https://darpanjain.life" target="_blank">CA Darpan Jain</a></p>
+        <div class="social-links">
+            <a href="https://twitter.com/CAwhoCodes" target="_blank" title="X (Twitter)"><img src="assets/x.png" alt="X (Twitter)" class="social-icon x-icon"></a>
+            <a href="https://www.linkedin.com/in/cadarpanjain" target="_blank" title="LinkedIn"><img src="assets/linkedin.png" alt="LinkedIn" class="social-icon linkedin-icon"></a>
+            <a href="mailto:acadarpanjain@gmail.com" title="Email"><img src="assets/gmail.png" alt="Email" class="social-icon gmail-icon"></a>
+        </div>
+    </footer>
 
     <script>
         // Get the marksheet image from localStorage

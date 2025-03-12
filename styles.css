@@ -549,14 +549,6 @@ body {
     font-weight: bold;
 }
 
-.disclaimer {
-    font-size: 12px;
-    color: #666;
-    text-align: justify;
-    padding: 20px;
-    border-top: 1px solid #eee;
-    margin-top: 20px;
-}
 
 /* Mobile Responsive Styles */
 @media screen and (max-width: 768px) {
@@ -634,4 +626,59 @@ body {
     transform: translateY(-2px);
 }
 
-/* Remove duplicate form-row styles */ 
+/* Remove duplicate form-row styles */
+
+/* Site Footer */
+.site-footer {
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    color: var(--text-color);
+}
+
+.site-footer p {
+    margin-bottom: 1rem;
+}
+
+.site-footer a {
+    color: #0056b3;
+    text-decoration: underline;
+    transition: var(--transition);
+}
+
+.site-footer a:hover {
+    color: #003d80;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.social-links a {
+    color: #000;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.social-icon {
+    transition: all 0.3s ease;
+    width: 1.4rem;
+    height: 1.4rem;
+    object-fit: contain;
+}
+
+.x-icon, .linkedin-icon, .gmail-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    object-fit: contain;
+}
+
+.social-links a:hover .social-icon {
+    transform: translateY(-2px);
+} 
