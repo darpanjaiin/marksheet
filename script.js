@@ -492,6 +492,24 @@ function handleDownloadClick() {
                     groupHeaders.forEach(header => {
                         header.style.borderBottom = 'none';
                     });
+                    
+                    // Apply custom colors for CA Foundation if needed
+                    const examType = document.getElementById('examType').value;
+                    if (examType === 'CA Foundation') {
+                        const foundationSubjects = clonedMarksheet.querySelector('#foundationSubjects');
+                        if (foundationSubjects) {
+                            const foundationTotalRow = foundationSubjects.querySelector('.total-row');
+                            const foundationResultRow = foundationSubjects.querySelector('.result-row');
+                            
+                            if (foundationTotalRow) {
+                                foundationTotalRow.style.backgroundColor = '#91008d'; // Darker purple
+                            }
+                            
+                            if (foundationResultRow) {
+                                foundationResultRow.style.backgroundColor = '#ad5f9d'; // Lighter purple
+                            }
+                        }
+                    }
                 }
             }
         }).then(function(canvas) {
