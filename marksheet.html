@@ -81,19 +81,57 @@
             border: none;
             border-radius: 0;
         }
+        
+        /* Sharing message styling */
+        .sharing-message {
+            display: none;
+            margin: 10px 0;
+            color: #91008d;
+            font-weight: bold;
+            font-style: italic;
+            font-family: Arial, sans-serif;
+        }
+        
+        @media (max-width: 768px) {
+            .sharing-message {
+                display: block;
+            }
+        }
+        
+        /* Enhanced header styling - keeping for reference but not using */
+        #personalizedHeading {
+            display: none;
+        }
+        
+        .highlight {
+            color: #91008d;
+            font-weight: 700;
+        }
+        
+        .sparkle {
+            display: inline-block;
+            animation: sparkle 2s infinite;
+            transform-origin: center;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
 </head>
 <body>
     <div class="content">
-        <h2 id="personalizedHeading">CA Student, Dream Big, Manifest Your Win!</h2>
+        <div class="buttons" style="margin-bottom: 20px;">
+            <a id="downloadButton" class="button">Download Marksheet</a>
+            <a href="index.html" class="button">Back to Form</a>
+        </div>
         <div id="marksheetImageContainer">
             <!-- Marksheet image will be inserted here by JavaScript -->
         </div>
         <p class="mobile-instructions">Press and hold the image to save</p>
-        <div class="buttons">
-            <a id="downloadButton" class="button">Download Marksheet</a>
-            <a href="index.html" class="button">Back to Form</a>
-        </div>
+        <p class="sharing-message">Hey, view my vision marksheet</p>
     </div>
 
     <script>
@@ -102,12 +140,6 @@
             const marksheetImage = localStorage.getItem('marksheetImage');
             const studentName = localStorage.getItem('studentName');
             const examType = localStorage.getItem('examType') || 'Final';
-            
-            // Update the heading with the student's name if available
-            if (studentName) {
-                document.getElementById('personalizedHeading').textContent = 
-                    `CA ${studentName}, Dream Big, Manifest Your ${examType} Win!`;
-            }
             
             if (marksheetImage) {
                 // Create and add the image
