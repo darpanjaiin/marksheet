@@ -39,6 +39,67 @@
             box-shadow: 3.5px 5px 0 #000;
             transform: translateY(-2px);
         }
+
+        /* Styles for the input group with exemption button */
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-group input[type="number"] {
+            flex: 1;
+        }
+
+        .exempt-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 1.5px solid #000;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 2px 2px 0 #000;
+        }
+
+        .exempt-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .exempt-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Tooltip styles */
+        .exempt-btn {
+            position: relative;
+        }
+
+        .exempt-btn::after {
+            content: "Exempted";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 4px 8px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .exempt-btn:hover::after {
+            visibility: visible;
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -79,19 +140,28 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="fr">Financial Reporting</label>
-                                <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="fr" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('fr')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="afm">Advanced Financial Management</label>
-                                <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="afm" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('afm')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="aaa">Advanced Auditing and Assurance</label>
-                                <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="aaa" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('aaa')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -101,19 +171,28 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="dtit">Direct Tax & International Taxation</label>
-                                <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="dtit" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('dtit')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="itl">Indirect Tax Laws</label>
-                                <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="itl" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('itl')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="ibs">Integrated Business Solutions</label>
-                                <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="ibs" min="0" max="100" required placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('ibs')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -126,19 +205,28 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="accounting">Accounting</label>
-                                <input type="number" id="accounting" min="0" max="100" placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="accounting" min="0" max="100" placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('accounting')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="corporateLaws">Corporate and Other Laws</label>
-                                <input type="number" id="corporateLaws" min="0" max="100" placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="corporateLaws" min="0" max="100" placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('corporateLaws')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="taxation">Taxation</label>
-                                <input type="number" id="taxation" min="0" max="100" placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="taxation" min="0" max="100" placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('taxation')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,19 +236,28 @@
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="costAccounting">Cost and Management Accounting</label>
-                                <input type="number" id="costAccounting" min="0" max="100" placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="costAccounting" min="0" max="100" placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('costAccounting')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="auditing">Auditing and Assurance</label>
-                                <input type="number" id="auditing" min="0" max="100" placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="auditing" min="0" max="100" placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('auditing')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="fm">Financial Management & Strategic Management</label>
-                                <input type="number" id="fm" min="0" max="100" placeholder="Enter marks (0-100)">
+                                <div class="input-group">
+                                    <input type="number" id="fm" min="0" max="100" placeholder="Enter marks (0-100)">
+                                    <button type="button" class="exempt-btn" onclick="toggleExemption('fm')" disabled>E</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -66,6 +66,56 @@ const examSubjects = {
     }
 };
 
+// Store exemption states
+const exemptionStates = {};
+
+// Function to check if a subject is exempt
+function isExempt(subjectId) {
+    return exemptionStates[subjectId] === true;
+}
+
+// Function to toggle exemption state
+function toggleExemption(subjectId) {
+    const input = document.getElementById(subjectId);
+    const button = input.nextElementSibling;
+    const marks = parseInt(input.value);
+
+    if (marks >= 60) {
+        exemptionStates[subjectId] = !exemptionStates[subjectId];
+        button.classList.toggle('active');
+    }
+}
+
+// Function to update exemption button state
+function updateExemptionButton(subjectId) {
+    const input = document.getElementById(subjectId);
+    const button = input.nextElementSibling;
+    const marks = parseInt(input.value);
+
+    if (marks >= 60) {
+        button.disabled = false;
+    } else {
+        button.disabled = true;
+        button.classList.remove('active');
+        exemptionStates[subjectId] = false;
+    }
+}
+
+// Add input event listeners for all subject inputs
+document.addEventListener('DOMContentLoaded', function() {
+    const subjects = [
+        'fr', 'afm', 'aaa', 'dtit', 'itl', 'ibs',  // CA Final
+        'accounting', 'corporateLaws', 'taxation', 'costAccounting', 'auditing', 'fm'  // CA Intermediate
+    ];
+
+    subjects.forEach(subject => {
+        const input = document.getElementById(subject);
+        if (input) {
+            input.addEventListener('input', () => updateExemptionButton(subject));
+        }
+    });
+});
+
 // Function to format marks with leading zeros
 function formatMarks(marks) {
     return marks.toString().padStart(3, '0');
@@ -330,6 +380,15 @@ form.addEventListener('submit', (e) => {
     generateAndOpenImage();
 });
 
+// Update the formatMarksWithExemption function
+function formatMarksWithExemption(marks, isExempted) {
+    const formattedMarks = formatMarks(marks);
+    if (isExempted && marks >= 60) {
+        return `${formattedMarks} E`;
+    }
+    return formattedMarks;
+}
+
 // Process CA Final form
 function processCaFinalForm() {
     // Get marks
@@ -360,24 +419,22 @@ function processCaFinalForm() {
         const group2Passed = group2Total >= 150;
 
         if (grandTotal >= 300 && ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150))) {
-            // Set-off applies only when one group is below 150, other is above 150, and total >= 300
             group1Result = "SUCCESSFUL";
             group2Result = "SUCCESSFUL";
             setOffApplied = true;
         } else {
-            // Normal evaluation: each group needs 150 individually
             group1Result = group1Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
             group2Result = group2Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
         }
     }
     
-    // Update marks
-    document.getElementById('displayFr').textContent = formatMarks(frMarks);
-    document.getElementById('displayAfm').textContent = formatMarks(afmMarks);
-    document.getElementById('displayAaa').textContent = formatMarks(aaaMarks);
-    document.getElementById('displayDtit').textContent = formatMarks(dtitMarks);
-    document.getElementById('displayItl').textContent = formatMarks(itlMarks);
-    document.getElementById('displayIbs').textContent = formatMarks(ibsMarks);
+    // Update marks with exemptions
+    document.getElementById('displayFr').textContent = formatMarksWithExemption(frMarks, isExempt('fr'));
+    document.getElementById('displayAfm').textContent = formatMarksWithExemption(afmMarks, isExempt('afm'));
+    document.getElementById('displayAaa').textContent = formatMarksWithExemption(aaaMarks, isExempt('aaa'));
+    document.getElementById('displayDtit').textContent = formatMarksWithExemption(dtitMarks, isExempt('dtit'));
+    document.getElementById('displayItl').textContent = formatMarksWithExemption(itlMarks, isExempt('itl'));
+    document.getElementById('displayIbs').textContent = formatMarksWithExemption(ibsMarks, isExempt('ibs'));
     
     // Update totals and results
     document.getElementById('group1Total').textContent = formatMarks(group1Total);
@@ -417,24 +474,22 @@ function processCaIntermediateForm() {
         const group2Passed = group2Total >= 150;
 
         if (grandTotal >= 300 && ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150))) {
-            // Set-off applies only when one group is below 150, other is above 150, and total >= 300
             group1Result = "SUCCESSFUL";
             group2Result = "SUCCESSFUL";
             setOffApplied = true;
         } else {
-            // Normal evaluation: each group needs 150 individually
             group1Result = group1Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
             group2Result = group2Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
         }
     }
     
-    // Update marks
-    document.getElementById('displayAccounting').textContent = formatMarks(accountingMarks);
-    document.getElementById('displayCorporateLaws').textContent = formatMarks(corporateLawsMarks);
-    document.getElementById('displayTaxation').textContent = formatMarks(taxationMarks);
-    document.getElementById('displayCostAccounting').textContent = formatMarks(costAccountingMarks);
-    document.getElementById('displayAuditing').textContent = formatMarks(auditingMarks);
-    document.getElementById('displayFm').textContent = formatMarks(fmMarks);
+    // Update marks with exemptions
+    document.getElementById('displayAccounting').textContent = formatMarksWithExemption(accountingMarks, isExempt('accounting'));
+    document.getElementById('displayCorporateLaws').textContent = formatMarksWithExemption(corporateLawsMarks, isExempt('corporateLaws'));
+    document.getElementById('displayTaxation').textContent = formatMarksWithExemption(taxationMarks, isExempt('taxation'));
+    document.getElementById('displayCostAccounting').textContent = formatMarksWithExemption(costAccountingMarks, isExempt('costAccounting'));
+    document.getElementById('displayAuditing').textContent = formatMarksWithExemption(auditingMarks, isExempt('auditing'));
+    document.getElementById('displayFm').textContent = formatMarksWithExemption(fmMarks, isExempt('fm'));
     
     // Update totals and results
     document.getElementById('group1Total').textContent = formatMarks(group1Total);
@@ -804,4 +859,13 @@ function calculateResults() {
     } else {
         updateGroupedDisplay(name, examType, group1Total, group2Total, group1Result, group2Result);
     }
+}
+
+// Update the formatMarksWithExemption function
+function formatMarksWithExemption(marks, isExempted) {
+    const formattedMarks = formatMarks(marks);
+    if (isExempted && marks >= 60) {
+        return `${formattedMarks} E`;
+    }
+    return formattedMarks;
 } 
