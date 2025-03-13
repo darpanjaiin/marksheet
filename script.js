@@ -349,11 +349,27 @@ function processCaFinalForm() {
     const allSubjectsPassed = isSubjectPassed(frMarks) && isSubjectPassed(afmMarks) && 
                              isSubjectPassed(aaaMarks) && isSubjectPassed(dtitMarks) && 
                              isSubjectPassed(itlMarks) && isSubjectPassed(ibsMarks);
-    
-    // Determine results
-    const group1Result = isGroupPassed(frMarks, afmMarks, aaaMarks, group1Total) ? "SUCCESSFUL" : "UNSUCCESSFUL";
-    const group2Result = isGroupPassed(dtitMarks, itlMarks, ibsMarks, group2Total) ? "SUCCESSFUL" : "UNSUCCESSFUL";
-    const overallResult = determineResult(group1Total, group2Total, allSubjectsPassed);
+
+    // Apply set-off logic
+    let group1Result = "UNSUCCESSFUL";
+    let group2Result = "UNSUCCESSFUL";
+    let setOffApplied = false;
+
+    if (allSubjectsPassed) {
+        const group1Passed = group1Total >= 150;
+        const group2Passed = group2Total >= 150;
+
+        if (grandTotal >= 300 && ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150))) {
+            // Set-off applies only when one group is below 150, other is above 150, and total >= 300
+            group1Result = "SUCCESSFUL";
+            group2Result = "SUCCESSFUL";
+            setOffApplied = true;
+        } else {
+            // Normal evaluation: each group needs 150 individually
+            group1Result = group1Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
+            group2Result = group2Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
+        }
+    }
     
     // Update marks
     document.getElementById('displayFr').textContent = formatMarks(frMarks);
@@ -366,7 +382,7 @@ function processCaFinalForm() {
     // Update totals and results
     document.getElementById('group1Total').textContent = formatMarks(group1Total);
     document.getElementById('group2Total').textContent = formatMarks(group2Total);
-    document.getElementById('grandTotal').textContent = formatMarks(grandTotal);
+    document.getElementById('grandTotal').textContent = formatMarks(grandTotal) + (setOffApplied ? " <" : "");
     document.getElementById('group1Result').textContent = group1Result;
     document.getElementById('group2Result').textContent = group2Result;
 }
@@ -390,11 +406,27 @@ function processCaIntermediateForm() {
     const allSubjectsPassed = isSubjectPassed(accountingMarks) && isSubjectPassed(corporateLawsMarks) && 
                              isSubjectPassed(taxationMarks) && isSubjectPassed(costAccountingMarks) && 
                              isSubjectPassed(auditingMarks) && isSubjectPassed(fmMarks);
-    
-    // Determine results
-    const group1Result = isGroupPassed(accountingMarks, corporateLawsMarks, taxationMarks, group1Total) ? "SUCCESSFUL" : "UNSUCCESSFUL";
-    const group2Result = isGroupPassed(costAccountingMarks, auditingMarks, fmMarks, group2Total) ? "SUCCESSFUL" : "UNSUCCESSFUL";
-    const overallResult = determineResult(group1Total, group2Total, allSubjectsPassed);
+
+    // Apply set-off logic
+    let group1Result = "UNSUCCESSFUL";
+    let group2Result = "UNSUCCESSFUL";
+    let setOffApplied = false;
+
+    if (allSubjectsPassed) {
+        const group1Passed = group1Total >= 150;
+        const group2Passed = group2Total >= 150;
+
+        if (grandTotal >= 300 && ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150))) {
+            // Set-off applies only when one group is below 150, other is above 150, and total >= 300
+            group1Result = "SUCCESSFUL";
+            group2Result = "SUCCESSFUL";
+            setOffApplied = true;
+        } else {
+            // Normal evaluation: each group needs 150 individually
+            group1Result = group1Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
+            group2Result = group2Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
+        }
+    }
     
     // Update marks
     document.getElementById('displayAccounting').textContent = formatMarks(accountingMarks);
@@ -407,7 +439,7 @@ function processCaIntermediateForm() {
     // Update totals and results
     document.getElementById('group1Total').textContent = formatMarks(group1Total);
     document.getElementById('group2Total').textContent = formatMarks(group2Total);
-    document.getElementById('grandTotal').textContent = formatMarks(grandTotal);
+    document.getElementById('grandTotal').textContent = formatMarks(grandTotal) + (setOffApplied ? " <" : "");
     document.getElementById('group1Result').textContent = group1Result;
     document.getElementById('group2Result').textContent = group2Result;
 }
@@ -685,5 +717,91 @@ function resetFormAfterGeneration() {
         marksheet.style.display = 'none';
         marksheet.style.position = '';
         marksheet.style.left = '';
+    }
+}
+
+function calculateResults() {
+    const examType = document.getElementById('examType').value;
+    const name = document.getElementById('name').value;
+
+    // Get marks based on exam type
+    let group1Total = 0;
+    let group2Total = 0;
+    let allSubjectsAbove40 = true;
+
+    if (examType === 'CA Final') {
+        // Group 1
+        const fr = parseInt(document.getElementById('fr').value) || 0;
+        const afm = parseInt(document.getElementById('afm').value) || 0;
+        const aaa = parseInt(document.getElementById('aaa').value) || 0;
+        group1Total = fr + afm + aaa;
+
+        // Group 2
+        const dtit = parseInt(document.getElementById('dtit').value) || 0;
+        const itl = parseInt(document.getElementById('itl').value) || 0;
+        const ibs = parseInt(document.getElementById('ibs').value) || 0;
+        group2Total = dtit + itl + ibs;
+
+        // Check if any subject is below 40
+        allSubjectsAbove40 = fr >= 40 && afm >= 40 && aaa >= 40 && 
+                            dtit >= 40 && itl >= 40 && ibs >= 40;
+    } else if (examType === 'CA Intermediate') {
+        // Group 1
+        const accounting = parseInt(document.getElementById('accounting').value) || 0;
+        const corporateLaws = parseInt(document.getElementById('corporateLaws').value) || 0;
+        const taxation = parseInt(document.getElementById('taxation').value) || 0;
+        group1Total = accounting + corporateLaws + taxation;
+
+        // Group 2
+        const costAccounting = parseInt(document.getElementById('costAccounting').value) || 0;
+        const auditing = parseInt(document.getElementById('auditing').value) || 0;
+        const fm = parseInt(document.getElementById('fm').value) || 0;
+        group2Total = costAccounting + auditing + fm;
+
+        // Check if any subject is below 40
+        allSubjectsAbove40 = accounting >= 40 && corporateLaws >= 40 && taxation >= 40 && 
+                            costAccounting >= 40 && auditing >= 40 && fm >= 40;
+    } else if (examType === 'CA Foundation') {
+        // Foundation logic remains unchanged
+        const accounting_f = parseInt(document.getElementById('accounting_f').value) || 0;
+        const law_f = parseInt(document.getElementById('law_f').value) || 0;
+        const maths_f = parseInt(document.getElementById('maths_f').value) || 0;
+        const economics_f = parseInt(document.getElementById('economics_f').value) || 0;
+        
+        group1Total = accounting_f + law_f;
+        group2Total = maths_f + economics_f;
+        
+        allSubjectsAbove40 = accounting_f >= 40 && law_f >= 40 && 
+                            maths_f >= 40 && economics_f >= 40;
+    }
+
+    // Calculate results with set-off consideration
+    let group1Result = 'UNSUCCESSFUL';
+    let group2Result = 'UNSUCCESSFUL';
+    const totalMarks = group1Total + group2Total;
+
+    // Set-off logic for CA Inter and Final
+    if ((examType === 'CA Final' || examType === 'CA Intermediate') && allSubjectsAbove40) {
+        // If total marks are 300 or more (50% of 600) and all subjects are above 40,
+        // apply set-off between groups
+        if (totalMarks >= 300) {
+            group1Result = 'SUCCESSFUL';
+            group2Result = 'SUCCESSFUL';
+        } else {
+            // Individual group assessment without set-off
+            group1Result = group1Total >= 150 ? 'SUCCESSFUL' : 'UNSUCCESSFUL';
+            group2Result = group2Total >= 150 ? 'SUCCESSFUL' : 'UNSUCCESSFUL';
+        }
+    } else if (examType === 'CA Foundation' && allSubjectsAbove40) {
+        // Foundation logic remains unchanged
+        group1Result = group1Total >= 100 ? 'SUCCESSFUL' : 'UNSUCCESSFUL';
+        group2Result = group2Total >= 100 ? 'SUCCESSFUL' : 'UNSUCCESSFUL';
+    }
+
+    // Update the display
+    if (examType === 'CA Foundation') {
+        updateFoundationDisplay(name, group1Total, group2Total, group1Result, group2Result);
+    } else {
+        updateGroupedDisplay(name, examType, group1Total, group2Total, group1Result, group2Result);
     }
 } 
