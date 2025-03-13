@@ -404,27 +404,31 @@ function processCaFinalForm() {
     const group2Total = dtitMarks + itlMarks + ibsMarks;
     const grandTotal = group1Total + group2Total;
     
-    // Check if all subjects have minimum marks
-    const allSubjectsPassed = isSubjectPassed(frMarks) && isSubjectPassed(afmMarks) && 
-                             isSubjectPassed(aaaMarks) && isSubjectPassed(dtitMarks) && 
-                             isSubjectPassed(itlMarks) && isSubjectPassed(ibsMarks);
-
-    // Apply set-off logic
+    // Check each group's subjects independently
+    const group1SubjectsPassed = isSubjectPassed(frMarks) && isSubjectPassed(afmMarks) && isSubjectPassed(aaaMarks);
+    const group2SubjectsPassed = isSubjectPassed(dtitMarks) && isSubjectPassed(itlMarks) && isSubjectPassed(ibsMarks);
+    
+    // Determine each group's result independently
     let group1Result = "UNSUCCESSFUL";
     let group2Result = "UNSUCCESSFUL";
     let setOffApplied = false;
 
-    if (allSubjectsPassed) {
-        const group1Passed = group1Total >= 150;
-        const group2Passed = group2Total >= 150;
+    // Check Group 1
+    if (group1SubjectsPassed && group1Total >= 150) {
+        group1Result = "SUCCESSFUL";
+    }
 
-        if (grandTotal >= 300 && ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150))) {
+    // Check Group 2
+    if (group2SubjectsPassed && group2Total >= 150) {
+        group2Result = "SUCCESSFUL";
+    }
+
+    // Apply set-off only if both groups have passing marks in all subjects
+    if (group1SubjectsPassed && group2SubjectsPassed && grandTotal >= 300) {
+        if ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150)) {
             group1Result = "SUCCESSFUL";
             group2Result = "SUCCESSFUL";
             setOffApplied = true;
-        } else {
-            group1Result = group1Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
-            group2Result = group2Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
         }
     }
     
@@ -459,27 +463,33 @@ function processCaIntermediateForm() {
     const group2Total = costAccountingMarks + auditingMarks + fmMarks;
     const grandTotal = group1Total + group2Total;
     
-    // Check if all subjects have minimum marks
-    const allSubjectsPassed = isSubjectPassed(accountingMarks) && isSubjectPassed(corporateLawsMarks) && 
-                             isSubjectPassed(taxationMarks) && isSubjectPassed(costAccountingMarks) && 
-                             isSubjectPassed(auditingMarks) && isSubjectPassed(fmMarks);
-
-    // Apply set-off logic
+    // Check each group's subjects independently
+    const group1SubjectsPassed = isSubjectPassed(accountingMarks) && isSubjectPassed(corporateLawsMarks) && 
+                                isSubjectPassed(taxationMarks);
+    const group2SubjectsPassed = isSubjectPassed(costAccountingMarks) && isSubjectPassed(auditingMarks) && 
+                                isSubjectPassed(fmMarks);
+    
+    // Determine each group's result independently
     let group1Result = "UNSUCCESSFUL";
     let group2Result = "UNSUCCESSFUL";
     let setOffApplied = false;
 
-    if (allSubjectsPassed) {
-        const group1Passed = group1Total >= 150;
-        const group2Passed = group2Total >= 150;
+    // Check Group 1
+    if (group1SubjectsPassed && group1Total >= 150) {
+        group1Result = "SUCCESSFUL";
+    }
 
-        if (grandTotal >= 300 && ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150))) {
+    // Check Group 2
+    if (group2SubjectsPassed && group2Total >= 150) {
+        group2Result = "SUCCESSFUL";
+    }
+
+    // Apply set-off only if both groups have passing marks in all subjects
+    if (group1SubjectsPassed && group2SubjectsPassed && grandTotal >= 300) {
+        if ((group1Total < 150 && group2Total >= 150) || (group1Total >= 150 && group2Total < 150)) {
             group1Result = "SUCCESSFUL";
             group2Result = "SUCCESSFUL";
             setOffApplied = true;
-        } else {
-            group1Result = group1Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
-            group2Result = group2Passed ? "SUCCESSFUL" : "UNSUCCESSFUL";
         }
     }
     
